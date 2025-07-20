@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Vision: A Trio of Case Studies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F4F9;
+        }
+        .flowchart-box {
+            background-color: #e0f2fe;
+            border: 2px solid #0088FE;
+            color: #0c4a6e;
+            font-weight: 500;
+        }
+        .flowchart-arrow {
+            color: #6b7280;
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#0088FE] mb-2">Intelligent Vision Systems</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">A deep dive into the core methodologies of modern computer vision. These three case studies break down the process of seeing, understanding, and interpreting visual data.</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#00C49F] mb-4">Case Study 1: Video Stream Processing</h2>
+                <p class="text-gray-600 mb-6">The first step in any real-time video analysis is accessing the video feed itself. The Real-Time Streaming Protocol (RTSP) is a standard used to control streaming media servers. This case study outlines the methodology for capturing individual frames from an RTSP source, turning a continuous video stream into analyzable images.</p>
+                
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-xl font-bold text-center text-gray-700 mb-6">Frame Capture Workflow from an RTSP Source</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="text-center p-4 rounded-lg flowchart-box w-48 h-24 flex items-center justify-center">Connect to RTSP Stream</div>
+                        <div class="flowchart-arrow transform md:-rotate-0 rotate-90">➔</div>
+                        <div class="text-center p-4 rounded-lg flowchart-box w-48 h-24 flex items-center justify-center">Initiate Frame Reading Loop</div>
+                        <div class="flowchart-arrow transform md:-rotate-0 rotate-90">➔</div>
+                        <div class="text-center p-4 rounded-lg flowchart-box w-48 h-24 flex items-center justify-center">Process Each Frame (e.g., Detect Objects)</div>
+                        <div class="flowchart-arrow transform md:-rotate-0 rotate-90">➔</div>
+                        <div class="text-center p-4 rounded-lg flowchart-box w-48 h-24 flex items-center justify-center">Display or Store Result</div>
+                    </div>
+                    <p class="text-sm text-center text-gray-500 mt-6">This cyclical process continuously reads the video feed, allowing for real-time analysis on a frame-by-frame basis.</p>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Methodology in Practice</h3>
+                    <p class="text-gray-600 mb-4">A library like OpenCV simplifies this process immensely. A function establishes a connection to the camera's RTSP URL. If the connection is successful, it enters a continuous loop, reading one frame at a time. Each captured frame is essentially a static image that can then be passed to other functions for analysis.</p>
+                    <div class="code-block">
+                        <span style="color: #FF8042;">def</span> <span style="color: #FFBB28;">capture_frames_from_rtsp</span>(rtsp_url):
+                        <span style="color: #00C49F;">    # Establishes a connection to the video stream</span>
+                            video_stream = connect_to_stream(rtsp_url)
+                        
+                        <span style="color: #FF8042;">    while</span> video_stream.isOpened():
+                        <span style="color: #00C49F;">        # Reads a single frame from the stream</span>
+                                success, frame = video_stream.read()
+                        <span style="color: #FF8042;">        if not</span> success:
+                        <span style="color: #FF8042;">            break</span>
+                        
+                        <span style="color: #00C49F;">        # Frame is now an image ready for processing</span>
+                                process_image(frame)
+                    </div>
+                </div>
+            </section>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8 mt-8">
+                <h2 class="text-3xl font-bold text-[#FFBB28] mb-4">Case Study 2: Object Detection</h2>
+                <p class="text-gray-600 mb-6">Once we have a frame, the next step is to understand its contents. Object detection is a computer vision technique that identifies and locates objects within an image or video. This is crucial for applications like autonomous driving, security surveillance, and inventory management.</p>
+            </section>
+
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">Common Applications of Object Detection</h3>
+                <p class="text-gray-600 mb-4 text-center">Object detection is transforming various industries by enabling automated visual understanding.</p>
+                <div class="chart-container">
+                    <canvas id="objectDetectionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">The "You Only Look Once" (YOLO) Method</h3>
+                <p class="text-gray-600 mb-4">YOLO is a state-of-the-art, real-time object detection system. Unlike older methods, it examines the entire image in a single pass, making it incredibly fast. The flowchart below simplifies its core logic.</p>
+                <div class="flex flex-col items-center justify-center space-y-4 mt-6">
+                    <div class="text-center p-3 rounded-lg flowchart-box w-52">Input Image/Frame</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-52">Divide Image into a Grid</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-52">Predict Bounding Boxes & Confidence Scores per Cell</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-52">Identify Class of Object in each Box</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-52 bg-teal-100 border-teal-500 text-teal-800">Final Detections with Labels</div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6">
+                 <img src="https://placehold.co/1200x400/0088FE/FFFFFF?text=Object+Detection+in+Action" alt="An illustration of object detection on a city street" class="rounded-lg shadow-md mb-4 w-full h-auto object-cover">
+                <p class="text-gray-600 mb-4">In practice, a pre-trained model (like YOLO) is loaded. The captured frame is passed to this model, which returns a list of detected objects, each with coordinates for a bounding box, a class label (e.g., 'car', 'person'), and a confidence score indicating the model's certainty.</p>
+                <div class="code-block">
+                    <span style="color: #FF8042;">def</span> <span style="color: #FFBB28;">detect_objects_in_frame</span>(frame):
+                    <span style="color: #00C49F;">    # Load a pre-trained object detection model</span>
+                        model = load_detection_model('yolo_v5')
+                    
+                    <span style="color: #00C49F;">    # The model processes the image and returns detections</span>
+                        detections = model.predict(frame)
+                    
+                    <span style="color: #00C49F;">    # Detections include [box_coords, label, confidence]</span>
+                    <span style="color: #FF8042;">    for</span> item <span style="color: #FF8042;">in</span> detections:
+                                draw_bounding_box(frame, item.box_coords, item.label)
+                    
+                    <span style="color: #FF8042;">    return</span> frame_with_boxes
+                </div>
+            </div>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-xl p-6 md:p-8 mt-8">
+                <h2 class="text-3xl font-bold text-[#FF8042] mb-4">Case Study 3: Optical Character Recognition (OCR)</h2>
+                <p class="text-gray-600 mb-6">Beyond identifying objects, computer vision can also read text from images. Optical Character Recognition (OCR) is the process of converting images of typed, handwritten, or printed text into machine-readable text data. This is essential for digitizing documents, reading license plates, and more.</p>
+            </section>
+            
+             <div class="bg-white rounded-lg shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">The OCR Pipeline</h3>
+                <p class="text-gray-600 mb-4">Successful OCR is more than just reading; it's a multi-step process. Each stage cleans and refines the data to ensure the highest possible accuracy in the final text output.</p>
+                <div class="flex flex-col items-center justify-center space-y-4 mt-8">
+                     <div class="text-center p-3 rounded-lg flowchart-box w-56">1. Image Acquisition (Scan or Photo)</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-56">2. Pre-processing (Deskew, Noise Removal)</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-56">3. Text Recognition (Engine analyzes characters)</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="text-center p-3 rounded-lg flowchart-box w-56 bg-orange-100 border-orange-500 text-orange-800">4. Post-processing (Output Structured Text)</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h3 class="text-xl font-bold text-gray-700 mb-4 text-center">Impact of Pre-processing on OCR Accuracy</h3>
+                <p class="text-gray-600 mb-4 text-center">As this chart shows, cleaning an image before recognition dramatically improves the accuracy of the extracted text.</p>
+                <div class="chart-container">
+                    <canvas id="ocrAccuracyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2 bg-white rounded-lg shadow-xl p-6">
+                <img src="https://placehold.co/1200x400/FF8042/FFFFFF?text=Document+to+Digital+Text" alt="An illustration of a document being scanned and converted to digital text" class="rounded-lg shadow-md mb-4 w-full h-auto object-cover">
+                <p class="text-gray-600 mb-4">Popular OCR engines like Tesseract are used for the recognition step. The methodology involves taking an image (often a cropped region of interest from a larger frame), applying several pre-processing techniques to improve its quality, and then feeding it to the OCR engine to extract the text.</p>
+                <div class="code-block">
+                    <span style="color: #FF8042;">def</span> <span style="color: #FFBB28;">extract_text_from_image</span>(image_region):
+                    <span style="color: #00C49F;">    # Improve image quality for better recognition</span>
+                        preprocessed_image = enhance_for_ocr(image_region)
+                    
+                    <span style="color: #00C49F;">    # Use an OCR engine to convert image content to a string</span>
+                        extracted_text = ocr_engine.image_to_string(preprocessed_image)
+                    
+                    <span style="color: #FF8042;">    return</span> extracted_text
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12 py-4">
+            <p class="text-gray-500">&copy; 2025 Computer Vision Case Studies. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+<script>
+    function processLabels(labels) {
+        const charLimit = 16;
+        return labels.map(label => {
+            if (label.length <= charLimit) {
+                return label;
+            }
+            const words = label.split(' ');
+            const newLabels = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > charLimit) {
+                    newLabels.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) {
+                newLabels.push(currentLine.trim());
+            }
+            return newLabels;
+        });
+    }
+
+    const tooltipTitleCallback = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const objectDetectionCtx = document.getElementById('objectDetectionChart').getContext('2d');
+    new Chart(objectDetectionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Security & Surveillance', 'Autonomous Vehicles', 'Retail & Inventory', 'Medical Imaging', 'Agriculture'],
+            datasets: [{
+                label: 'Usage Distribution',
+                data: [35, 30, 15, 12, 8],
+                backgroundColor: [
+                    '#0088FE',
+                    '#00C49F',
+                    '#FFBB28',
+                    '#FF8042',
+                    '#a855f7'
+                ],
+                borderColor: '#FFFFFF',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            ...tooltipTitleCallback,
+            plugins: {
+                ...tooltipTitleCallback.plugins,
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: false,
+                }
+            }
+        }
+    });
+
+    const ocrAccuracyCtx = document.getElementById('ocrAccuracyChart').getContext('2d');
+    const ocrRawLabels = ['Raw Scanned Image', 'Image after Deskewing', 'Binarized Image (Black & White)', 'With Noise Reduction'];
+    const ocrProcessedLabels = processLabels(ocrRawLabels);
+    
+    new Chart(ocrAccuracyCtx, {
+        type: 'bar',
+        data: {
+            labels: ocrProcessedLabels,
+            datasets: [{
+                label: 'Character Accuracy (%)',
+                data: [65, 78, 85, 96],
+                backgroundColor: [
+                    '#FF8042',
+                    '#FFBB28',
+                    '#00C49F',
+                    '#0088FE'
+                ],
+                borderRadius: 5,
+                barThickness: 30,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            ...tooltipTitleCallback,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: '#e5e7eb'
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                 ...tooltipTitleCallback.plugins,
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
